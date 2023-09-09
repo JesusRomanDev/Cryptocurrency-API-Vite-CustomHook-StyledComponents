@@ -1,6 +1,7 @@
 //Importando este formulario en App.jsx
 import styled from '@emotion/styled'
 import React from 'react'
+import useSelectMonedas from '../hooks/useSelectMonedas' //Importando nuestro Custom Hook
 
 const InputSubmit = styled.input`
     background-color: #9497FF;
@@ -21,6 +22,8 @@ const InputSubmit = styled.input`
 `
 
 const Formulario = () => {
+    const [ SelectMonedas ] = useSelectMonedas(); //le damos el nombre que queramos a lo que este en el arreglo y luego ponemos nuestro Hook
+    SelectMonedas(); //Lo mandamos llamar y nos imprime el cuerpo de lo que sea la funcion
   return (
     <form>
 
