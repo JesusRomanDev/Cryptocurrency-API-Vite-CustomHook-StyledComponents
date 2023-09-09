@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from '@emotion/styled' /* este codigo nos permite definir un styled component */
 import ImagenCripto from './img/imagen-criptos.png' //Agregando la imagen para el fondo
+import Formulario from './components/Formulario'
 
 //Los styled components van por fuera del componente
 const Heading = styled.h1` //h1 sera la etiqueta que queremos, entonces el const Heading sera un H1
@@ -47,7 +48,12 @@ function App() {
   return (
     <Contenedor>
       <Imagen src={ImagenCripto} alt='Imagenes Criptomonedas'/>
-      <Heading>Cotiza Criptomonedas al Instante</Heading>
+      
+      <div>
+        <Heading>Cotiza Criptomonedas al Instante</Heading>
+
+        <Formulario />
+      </div>
     </Contenedor>
   )
 }
