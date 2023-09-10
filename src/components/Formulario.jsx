@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react' //Importando useEffect para nuestra API y traernos las criptomonedas, tambien importando useState para nuestra API y usarla para almacenar el array de objetos
 import useSelectMonedas from '../hooks/useSelectMonedas' //Importando nuestro Custom Hook
 import { monedas } from '../data/monedas'
+import Error from './Error'
 
 const InputSubmit = styled.input`
     background-color: #9497FF;
@@ -25,6 +26,8 @@ const InputSubmit = styled.input`
 
 const Formulario = () => {
   const [criptos, setCriptos] = useState([]);
+  //Agregando un useState para el error
+  const [error, setError] = useState(false);
 
   const [ moneda , SelectMonedas ] = useSelectMonedas('Elige tu Moneda', monedas); //le damos el nombre que queramos a lo que este en el arreglo y luego ponemos nuestro Hook, como valor inicial tendra un label/texto y se pasa a la funcion useSelectMonedas que esta en el archivo customHook de useSelectMonedas.jsx
     //Se agrego moneda, moneda es el state, este arreglo se llena de acuerdo al indice, ejemplo state es 0, SelectMonedas es 1, aqui pusimos al state como moneda (le podemos dar el nombre que queramos, no porque se llame state alla se tiene que llamar aqui igual)
@@ -57,14 +60,27 @@ const Formulario = () => {
       consultarAPI();
     }, []) //cuando cargue nuestro componente de Formulario consultar la API
 
-  return (
-    <form>
-        <SelectMonedas />
-        {/* <SelectCriptomonedas /> */}
-        <SelectCriptomoneda />
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    if([moneda, criptomoneda].includes('')){
+      setError(true);
+      return;
+    }
+    setError(false);
+    
+  }
 
-        <InputSubmit type="submit" value="Cotizar" name="" id="" />
-    </form>
+  return (
+    <>
+      {error && <Error>Todos los campos son obligatorios</Error>}
+      <form onSubmit={handleSubmit}>
+          <SelectMonedas />
+          {/* <SelectCriptomonedas /> */}
+          <SelectCriptomoneda />
+
+          <InputSubmit type="submit" value="Cotizar" name="" id="" />
+      </form>
+    </>
   )
 }
 
