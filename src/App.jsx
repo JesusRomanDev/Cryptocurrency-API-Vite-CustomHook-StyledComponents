@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from '@emotion/styled' /* este codigo nos permite definir un styled component */
 import ImagenCripto from './img/imagen-criptos.png' //Agregando la imagen para el fondo
 import Formulario from './components/Formulario'
@@ -43,7 +43,15 @@ const Imagen = styled.img`
 `
 
 function App() {
-  const [count, setCount] = useState(0)
+  //Definiendo nuevo state para poner abajo de Formulario el resultado
+  const [monedas, setMonedas] = useState({});
+
+  useEffect(()=>{
+    if(Object.keys(monedas).length > 0){
+      
+    }
+  }, [monedas])
+
 
   return (
     <Contenedor>
@@ -52,7 +60,9 @@ function App() {
       <div>
         <Heading>Cotiza Criptomonedas al Instante</Heading>
 
-        <Formulario />
+        <Formulario 
+          setMonedas={setMonedas} //pasandole setMonedas para poder setear esas monedas que elegimos
+        />
       </div>
     </Contenedor>
   )
