@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 
+
 const Label = styled.label`
-color: #FFF
+  color: #FFF;
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 15px 0;
+`
+
+const Select = styled.select`
+  width: 100%;
+  font-size: 18px;
+  padding: 14px;
+  border-radius: 10px;
 `
 
 const useSelectMonedas = (label, opciones) => { //los custom Hooks no tienen un return, los parametros al parecer no tienen las {}
+  const [state, setState] = useState('');
+
   const SelectMonedas = () => ( //Reemplazandolo por un return, esto significa que imprimira algo en pantalla
     <>
         <Label>{label}</Label>
-        <select name="" id="">
+        <Select name="" id="" value={state} onChange={e => setState(e.target.value)}>
           <option value="">Seleccione</option>
 
           {opciones.map(opcion => (
@@ -17,11 +32,11 @@ const useSelectMonedas = (label, opciones) => { //los custom Hooks no tienen un 
               {opcion.nombre}
             </option>
           ))}
-        </select>
+        </Select>
     </>
   )
 
-  return [SelectMonedas] //Para que esto sea un Hook que podamos importar en otro lugar, SE NECESITA EL RETURN para retornar esa funciona al Hook
+  return [state, SelectMonedas] //Para que esto sea un Hook que podamos importar en otro lugar, SE NECESITA EL RETURN para retornar esa funciona al Hook
 }
 
 export default useSelectMonedas
