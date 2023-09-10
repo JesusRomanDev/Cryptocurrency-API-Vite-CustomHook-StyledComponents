@@ -1,6 +1,6 @@
 //Importando este formulario en App.jsx
 import styled from '@emotion/styled'
-import React, { useEffect } from 'react' //Importando useEffect para nuestra API y traernos las criptomonedas
+import React, { useEffect, useState } from 'react' //Importando useEffect para nuestra API y traernos las criptomonedas, tambien importando useState para nuestra API y usarla para almacenar el array de objetos
 import useSelectMonedas from '../hooks/useSelectMonedas' //Importando nuestro Custom Hook
 import { monedas } from '../data/monedas'
 
@@ -29,6 +29,9 @@ const Formulario = () => {
     //SelectMonedas(); //Lo mandamos llamar y nos imprime el cuerpo de lo que sea la funcion
     // const [ SelectCriptomonedas] = useSelectMonedas('Elige tu Criptomoneda')
 
+
+    const [criptos, setCriptos] = useState([]);
+
     useEffect(()=>{
       const consultarAPI = async () =>{
         const url = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD"
@@ -37,6 +40,16 @@ const Formulario = () => {
         console.log(respuesta); //en la consola si el status es 200 entonces todo esta bien, si pudo
         const resultado = await respuesta.json();
         console.log(resultado); //fue exitosa y tenemos los 10 resultados de la API
+        
+        const arrayCriptos = resultado.Data.map(cripto => { //map para iterar y crear un nuevoarreglo
+          const objeto = {
+            id: cripto.CoinInfo.Name,
+            nombre: cripto.CoinInfo.FullName
+          }
+          return objeto; //retornando el objeto con cada iteracion a arrayCriptos
+        })
+        console.log(arrayCriptos);
+        setCriptos(arrayCriptos);
       }
       consultarAPI();
     }, []) //cuando cargue nuestro componente de Formulario consultar la API
