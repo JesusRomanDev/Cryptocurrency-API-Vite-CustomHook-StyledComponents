@@ -24,13 +24,16 @@ const InputSubmit = styled.input`
 `
 
 const Formulario = () => {
-    const [ moneda , SelectMonedas ] = useSelectMonedas('Elige tu Moneda', monedas); //le damos el nombre que queramos a lo que este en el arreglo y luego ponemos nuestro Hook, como valor inicial tendra un label/texto y se pasa a la funcion useSelectMonedas que esta en el archivo customHook de useSelectMonedas.jsx
+  const [criptos, setCriptos] = useState([]);
+
+  const [ moneda , SelectMonedas ] = useSelectMonedas('Elige tu Moneda', monedas); //le damos el nombre que queramos a lo que este en el arreglo y luego ponemos nuestro Hook, como valor inicial tendra un label/texto y se pasa a la funcion useSelectMonedas que esta en el archivo customHook de useSelectMonedas.jsx
     //Se agrego moneda, moneda es el state, este arreglo se llena de acuerdo al indice, ejemplo state es 0, SelectMonedas es 1, aqui pusimos al state como moneda (le podemos dar el nombre que queramos, no porque se llame state alla se tiene que llamar aqui igual)
     //SelectMonedas(); //Lo mandamos llamar y nos imprime el cuerpo de lo que sea la funcion
     // const [ SelectCriptomonedas] = useSelectMonedas('Elige tu Criptomoneda')
+  
+    //Agregando un nuevo select con nuestro customHook
+  const [ criptomoneda , SelectCriptomoneda ] = useSelectMonedas('Elige tu Criptomoneda', criptos);
 
-
-    const [criptos, setCriptos] = useState([]);
 
     useEffect(()=>{
       const consultarAPI = async () =>{
@@ -58,6 +61,7 @@ const Formulario = () => {
     <form>
         <SelectMonedas />
         {/* <SelectCriptomonedas /> */}
+        <SelectCriptomoneda />
 
         <InputSubmit type="submit" value="Cotizar" name="" id="" />
     </form>
