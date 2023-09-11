@@ -45,10 +45,24 @@ const Imagen = styled.img`
 function App() {
   //Definiendo nuevo state para poner abajo de Formulario el resultado
   const [monedas, setMonedas] = useState({});
+  //Definiendo nuevo state para el resultado de las criptomonedas que consultaremos a traves de la API que nos arroja todos los resultados
+  const [resultado, setResultado] = useState({})
 
   useEffect(()=>{
     if(Object.keys(monedas).length > 0){
-      
+      const cotizarCripto = async () => {
+        const {moneda, criptomoneda} = monedas;
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`
+
+        const respuesta = await fetch(url);
+        const resultado = await respuesta.json();
+
+        console.log(resultado); //aqui nos mostrara el objeto de la criptomoneda con la moneda seleccionada
+        console.log(resultado.DISPLAY[criptomoneda][moneda]); //accediendo dinamicamente 
+        setResultado(resultado.DISPLAY[criptomoneda][moneda]);
+      }
+
+      cotizarCripto();
     }
   }, [monedas])
 
