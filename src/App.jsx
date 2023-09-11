@@ -3,6 +3,7 @@ import styled from '@emotion/styled' /* este codigo nos permite definir un style
 import ImagenCripto from './img/imagen-criptos.png' //Agregando la imagen para el fondo
 import Formulario from './components/Formulario'
 import Resultado from './components/Resultado'
+import Spinner from './components/Spinner'
 
 //Los styled components van por fuera del componente
 const Heading = styled.h1` //h1 sera la etiqueta que queremos, entonces el const Heading sera un H1
@@ -48,10 +49,14 @@ function App() {
   const [monedas, setMonedas] = useState({});
   //Definiendo nuevo state para el resultado de las criptomonedas que consultaremos a traves de la API que nos arroja todos los resultados
   const [resultado, setResultado] = useState({})
+  //Definiendo nuevo state para nuestro spinner
+  const [cargando, setCargando] = useState(false);
 
   useEffect(()=>{
     if(Object.keys(monedas).length > 0){
       const cotizarCripto = async () => {
+        setCargando(true);
+        setResultado({}); //reseteandolo a un objeto vacio para que desaparezca la info cuando consultemos otra cripto
         const {moneda, criptomoneda} = monedas;
         const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`
 
@@ -61,6 +66,8 @@ function App() {
         console.log(resultado); //aqui nos mostrara el objeto de la criptomoneda con la moneda seleccionada
         console.log(resultado.DISPLAY[criptomoneda][moneda]); //accediendo dinamicamente 
         setResultado(resultado.DISPLAY[criptomoneda][moneda]);
+
+        setCargando(false); //una vez terminado regresa a false
       }
 
       cotizarCripto();
@@ -79,6 +86,7 @@ function App() {
           setMonedas={setMonedas} //pasandole setMonedas para poder setear esas monedas que elegimos
         />
 
+        {cargando && <Spinner />}
         {resultado.PRICE && <Resultado resultado={resultado}/>} {/* se tiene que poner resultado.PRICE, porque si los dejamos solo como resultado, siempre nos lo va a imprimir porque es UN OBJETO, SI FUERA UN BOOLEANO NO HABRIA PROBLEMA, PERO AL SER UN OBJETO SE NECESITA CHECAR una PROPIEDAD DE ESE OBJETO, en este caso el de PRICE */}
       </div>
     </Contenedor>
