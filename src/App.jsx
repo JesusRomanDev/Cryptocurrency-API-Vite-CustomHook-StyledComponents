@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from '@emotion/styled' /* este codigo nos permite definir un styled component */
 import ImagenCripto from './img/imagen-criptos.png' //Agregando la imagen para el fondo
 import Formulario from './components/Formulario'
+import Resultado from './components/Resultado'
 
 //Los styled components van por fuera del componente
 const Heading = styled.h1` //h1 sera la etiqueta que queremos, entonces el const Heading sera un H1
@@ -77,6 +78,8 @@ function App() {
         <Formulario 
           setMonedas={setMonedas} //pasandole setMonedas para poder setear esas monedas que elegimos
         />
+
+        {resultado.PRICE && <Resultado resultado={resultado}/>} {/* se tiene que poner resultado.PRICE, porque si los dejamos solo como resultado, siempre nos lo va a imprimir porque es UN OBJETO, SI FUERA UN BOOLEANO NO HABRIA PROBLEMA, PERO AL SER UN OBJETO SE NECESITA CHECAR una PROPIEDAD DE ESE OBJETO, en este caso el de PRICE */}
       </div>
     </Contenedor>
   )
