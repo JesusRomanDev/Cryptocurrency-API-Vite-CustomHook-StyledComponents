@@ -68,7 +68,7 @@ const Formulario = ({setMonedas}) => {
     }
     setError(false);
     //Pasandole el resultado a este useState
-    setMonedas({
+    setMonedas({ // <------ POSIBLEMENTE ESTE ES EL ISSUE QUE SE ME VINO A LA MENTE, en el cuerpo de la funcion la extraemos no c
       moneda,
       criptomoneda
     })
